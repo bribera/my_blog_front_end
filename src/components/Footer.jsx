@@ -56,7 +56,7 @@ const Footer = () => {
                 <Image src="/logo-color.png" width={80} height={80} />
               </div>
               <div className="flex flex-col gap-2">
-                <p className="">The first is important in everithing we touch</p>
+                <p className="font-medium">The first is important in everithing we touch</p>
                      {/* menu */}
                     <div className="">
                       <ul className="flex gap-[20px]">
