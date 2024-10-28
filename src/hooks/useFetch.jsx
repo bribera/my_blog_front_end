@@ -17,16 +17,16 @@ const useFetch = (url) => {
 
                 const res = await fetch(url, {
                         headers: {
-                          Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_TOKEN}`,  // Ajout du token ici
+                          Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_TOKEN}`,  
                         },
                       }
             );
-
                 const json = await res.json();
-                
-                setData(json)
 
-                setLoading(false)
+                
+                setData(json.data);
+                setLoading(false);
+
 
             
             } catch(error) {
@@ -40,7 +40,9 @@ const useFetch = (url) => {
     },[url])
 
 
-  return {loading, data, error}
+  return {loading, data, error};
+  console.log(data);
+
 }
 
 export default useFetch
