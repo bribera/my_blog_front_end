@@ -2,6 +2,7 @@
 import Image from "next/image";
 import useFetch from '@/hooks/useFetch';
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
+import Header from "@/components/Header"
 
 
 export const getStrapiMedia = (url) => {
@@ -19,8 +20,21 @@ export default  function Home() {
 
   return (
     <div className="">
-      <main className="py-[20px] px-[60px] w-full">
-        <div className="grid grid-cols-4 w-full gap-[20px]">
+      <main className="">
+
+        {/* Header */}
+        <div className="px-[60px] pt-[60px]">
+          <Header />
+        </div>
+
+        {/* Articles */}
+        <div className="py-[60px] px-[60px] w-full bg-white"> 
+
+          <div className="pb-[50px]">
+            <p className="text-[40px] font-semibold">Quelques articles</p>
+          </div>
+            {/* les produits */}
+          <div className="grid grid-cols-4 w-full gap-[20px]">
           {
            data && data.map((produit, id) => (
 
@@ -49,6 +63,8 @@ export default  function Home() {
               </div>
             ))
           }
+          </div>
+
         </div>
       </main>
       

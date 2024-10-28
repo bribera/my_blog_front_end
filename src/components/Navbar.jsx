@@ -20,8 +20,8 @@ const Navbar = () => {
     ]
 
   return (
-    <div>
-      <div className="flex justify-between items-center bg-gray-300 py-4 px-6 rounded-e-2 shadow-b-black">
+    <div className="fixed z-[99] w-full shadow">
+      <div className="flex justify-between items-center py-4 px-[60px] rounded-e-6 bg-gray-200">
         {/* logo */}
         <div className="">
           <Image alt="logo" src="/logo-color.png" width={80} height={80}/>
