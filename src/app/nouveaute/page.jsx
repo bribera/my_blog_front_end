@@ -1,4 +1,4 @@
-import Nouveaute from '@/components/Nouveaute'
+import Nouveaute from '@/app/components/Nouveaute'
 import React from 'react'
 
 const page = () => {
