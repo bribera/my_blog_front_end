@@ -2,18 +2,27 @@
 
 export async function fetchCategories() {
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_BASE_URL}/categories`);
+    const res = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_BASE_URL}/categories?populate=*`);
     
     const data = await res.json();
     return data.data; 
   
 }
   
-  export async function fetchArticles(category, search) {
+  export async function fetchArticles(categorie, search) {
+    let url = `${process.env.NEXT_PUBLIC_STRAPI_BASE_URL}/articles?populate=*`;
 
-    const categoryFilter = category ? `&filters[category][id][$eq]=${category}` : '';
-    const searchFilter = search ? `&filters[title][$containsi]=${search}` : '';
-    const res = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_BASE_URL}/articles?populate=*&${categoryFilter}${searchFilter}`);
+
+    
+  if (categorie) {
+    url += `&filters[categorie][id][$eq]=${categorie}`;
+  }
+  
+  if (search) {
+    url += `&filters[title][$containsi]=${search}`;
+  }
+    
+    const res = await fetch(url);
     const data = await res.json();
 
     console.log(data)
