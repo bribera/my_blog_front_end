@@ -2,18 +2,20 @@
 import Image from "next/image";
 import useFetch from '@/hooks/useFetch';
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
-import Header from "@/components/Header"
+import Header from "@/app/components/Header"
+import Link from 'next/link';
 
 
 export const getStrapiMedia = (url) => {
-  return `http://localhost:1337${url}`;
+  const apiUrl = process.env.NEXT_PUBLIC_STRAPI_DOMAIN_URL;
+  return `${apiUrl}${url}`;
 };
 
 
 
 export default  function Home() { 
 
-  const { data, error, loading } = useFetch('http://localhost:1337/api/produits?populate=*');
+  const { data, error, loading } = useFetch(`${process.env.NEXT_PUBLIC_STRAPI_BASE_URL}/produits?populate=*`);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
@@ -44,7 +46,9 @@ export default  function Home() {
                     <img src={getStrapiMedia(produit.ProductImage.url)} alt="produit image" width={200} height={200} className="w-full object-full"/>
                   </div>
                   <div className="px-6 py-4 bg-white flex flex-col gap-[10px]">
-                    <small className="text-[40px] font-semibold">{produit.Titre}</small>
+                    <Link href={`/produit/${produit.slug}`} className="underline">
+                      <small className="text-[40px] font-semibold">{produit.Titre}</small>
+                    </Link>
                     <BlocksRenderer
                       content={produit.Description}
                       blocks={{                            

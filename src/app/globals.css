@@ -19,4 +19,15 @@ body {
   background-color: rgb(229 231 235);
 }
 
+.cover-video{
+  height: 140px;
+}
+
+@layer base{
+
+  h3 {
+    @apply  font-[800] pb-[24px] md:pb-[30px] lg:pb-[32px] pt-[32px] md:pt-[40px] lg:pt-[40px] text-[24px] md:text-[38px] lg:text-[50px] leading-[34.38px] md:leading-[56.06px] lg:leading-[74.75px]
+  }
+}
+
 

@@ -10,11 +10,15 @@
   },
   "dependencies": {
     "@strapi/blocks-react-renderer": "^1.0.1",
+    "@tailwindcss/aspect-ratio": "^0.4.2",
+    "formik": "^2.4.6",
     "next": "14.2.15",
+    "qs": "^6.13.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
+    "@tailwindcss/typography": "^0.5.15",
     "eslint": "^8",
     "eslint-config-next": "14.2.15",
     "husky": "^9.1.6",
