@@ -19,17 +19,48 @@ const FilterSearch = () => {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [articles, setArticles] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // useEffect(() => {
+    
+  //   fetchCategories().then(data => setCategories(data));
+
+  // }, []);
 
   useEffect(() => {
+    const loadCategories = async () => {
+      try {
+        const categoriesData = await fetchCategories();
+        console.log('Fetched categories:', categoriesData); // Debug log
+        setCategories(categoriesData);
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+      }
+    };
     
-    fetchCategories().then(data => setCategories(data));
-
+    loadCategories();
   }, []);
 
+  // useEffect(() => {
+    
+  //   fetchArticles(selectedCategory, searchTerm).then(data => setArticles(data));
+    
+  // }, [selectedCategory, searchTerm]);
+
   useEffect(() => {
-    
-    fetchArticles(selectedCategory, searchTerm).then(data => setArticles(data));
-    
+    const loadArticles = async () => {
+      setLoading(true);
+      try {
+        const articlesData = await fetchArticles(selectedCategory, searchTerm);
+        console.log('Fetched articles:', articlesData); // Debug log
+        setArticles(articlesData);
+      } catch (error) {
+        console.error('Error fetching articles:', error);
+      }
+      setLoading(false);
+    };
+
+    loadArticles();
   }, [selectedCategory, searchTerm]);
 
 
