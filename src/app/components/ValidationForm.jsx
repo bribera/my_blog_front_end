@@ -1,22 +1,23 @@
 import React from 'react'
 
-const ValidationForm = () => {
+const ValidationForm = (formData) => {
 
     let error = {}
 
-    if(!formData.name) {
+    if(!formData.name || formData.name.trim() === '') {
         error.name = 'Name is Required'
     }
 
-    if(!formData.email) {
-        error.email = 'Name is Required'
-    }else if (!!/[*\s@]+@[*\s@]+\.[*\s@]+/.test(formData.
-        email)){
-            error.email="Email Is Invalid"
-        }
+    if (!formData.email || formData.email.trim() === '') {
+        error.email = 'Email is Required';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+        error.email = 'Email Is Invalid';
+    }
+    
 
-    if(!formData.message) {
-        error.message = 'Name is Required'
+
+    if(!formData.message || formData.message.trim() === '') {
+        error.message = 'Message is Required'
     }
 
   return error
