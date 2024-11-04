@@ -16,6 +16,12 @@ const Contact = () => {
     message: ''
   });
 
+  const [status, setStatus] = useState({
+    isSubmitting: false,
+    isSuccess: false,
+    error: null
+  });
+
   const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
 
@@ -24,6 +30,14 @@ const Contact = () => {
     setFormData({ ...formData, [name]: value
      });
   };
+
+   
+   if (errors[name]) {
+    setErrors(prevState => ({
+      ...prevState,
+      [name]: ''
+    }));
+  }
 
   
 
@@ -37,35 +51,56 @@ const Contact = () => {
     
     if (Object.keys(validationErrors).length === 0) {
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_BASE_URL}/contacts`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ data: formData })
-      });
+      setStatus({ isSubmitting: true, isSuccess: false, error: null });
 
-      
 
-    if (response.ok) {
-      setSubmitted(true);
+      try {
+
+        const response = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_BASE_URL}/contacts`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ data: formData })
+        });
+  
+        if (!response.ok) {
+          throw new Error('Failed to submit message');
+        }
+
+        setSubmitted(true);
       setFormData({ name: '', email: '', subject: '', message: '' });
-    } else {
-      console.error('Failed to submit message');
-    }
-   }
+   
+      setTimeout(() => {
+        setSubmitted(false);
+      }, 3000);
+        
+      }  catch (error) {
+        console.error('Error:', error);
+        setErrors({ submit: 'Failed to send message' });
+      } finally {
+        setStatus({ isSubmitting: false, isSuccess: true, error: null });
+      }
 
-   console.log(4)
-      console.log(formData)
+
+   }
    
   };
+
+  console.log(4);
+    console.log(formData);
 
   return (
     <div className=" pt-[160px] pb-[60px]  gap-[20px] px-[60px] ">
       <div className="flex items-center bg-slate-300">
         {/* left */}
         <div className="flex-1">
-          <Image alt="" src="/contact.png" width={300} height={300} className="w-full "/>
+          <img alt="contact photo" 
+            src="/contact.png" 
+            width={300} 
+            height={300} 
+            className="w-full h-full"
+            />
         </div>
         {/* right */}
         <div className="flex-1 px-[20px]">
@@ -116,10 +151,14 @@ const Contact = () => {
               ></textarea>
               {errors.message && <p className="text-red-400">{errors.message}</p>}
 
-              <Button type="submit">Envoyer</Button>
+              <Button type="submit" onClick={() => console.log('clicked')}  disabled={status.isSubmitting}>
+                {status.isSubmitting ? 'Envoi en cours...' : 'Envoyer'}
+
+              </Button>
             </form>
             
-            {submitted && <p>Votre message a été envoyé avec succès !</p>}
+            {submitted && <p className='text-green-500 font-medium italic'>Votre message a été envoyé avec succès !</p>}
+            
             
           </div>
         </div>
