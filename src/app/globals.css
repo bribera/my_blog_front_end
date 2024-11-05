@@ -23,6 +23,10 @@ body {
   height: 140px;
 }
 
+.savoir{
+  background-color: #1e293b!;
+}
+
 @layer base{
 
   h3 {

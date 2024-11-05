@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
+import Button from './Button'
 
 const Navbar = () => {
 
@@ -27,7 +28,7 @@ const Navbar = () => {
           <Image alt="logo" src="/logo-color.png" width={80} height={80}/>
         </div>
         {/* menu */}
-        <div className="">
+        <div className="flex gap-[20px] items-center">
           <ul className="flex gap-[20px]">
 
            { menu.map((item, id) => (
@@ -37,6 +38,14 @@ const Navbar = () => {
             ))}
 
           </ul>
+          <div className="flex gap-2 items-center">
+            <Link href="/auth/signup">            
+              <Button>S'enregister</Button>
+            </Link>
+            <Link href="/auth/signin">
+              <Button>Se connecter</Button>
+            </Link>
+          </div>
         </div>
       </div>
     </div>
