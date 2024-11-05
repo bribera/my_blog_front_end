@@ -57,7 +57,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 ## Learn More
 #  Strapi
-To learn more about Strqpi, take a look at the following resources:
+To learn more about Strapi, take a look at the following resources:
 
 - [Strapi Documentation](https://docs.strapi.io/) - learn about Strapi features and API.
 - [Learn Strapi](https://strapi.io/video-library/get-started-with-strapi-3-minutes) - an interactive Strapi tutorial.

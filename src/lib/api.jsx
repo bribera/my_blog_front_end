@@ -33,7 +33,7 @@ if (search) {
 export const registerUser = async (userData) => {
   try {
 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_BASE_URL}/users?populate=*`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_BASE_URL}/auth/local/register`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

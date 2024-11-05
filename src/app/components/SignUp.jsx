@@ -45,7 +45,7 @@ const SignUp = () => {
                 </p>
             </div>
 
-            {/* imputs */}
+            {/* inputs */}
 
             <div className="space-y-4 flex flex-col gap-[10px]">
                 {/* username */}
@@ -79,7 +79,7 @@ const SignUp = () => {
 
             {/* button submit */}
             
-                <Button type="submit" >S'enregister</Button>
+            <Button type="submit" >S'enregister</Button>
             
 
             <div className="mt-4 text-center text-[16px]">
