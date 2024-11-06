@@ -56,7 +56,7 @@ export const registerUser = async (userData) => {
 
 export const loginUser = async (userData) => {
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_BASE_URL}/users`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_DOMAIN_URL}/auth/local`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

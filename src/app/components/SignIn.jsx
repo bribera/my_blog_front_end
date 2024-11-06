@@ -1,6 +1,7 @@
 "use client"
 import React, { useState } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import Button from './Button'
 import { loginUser } from '@/lib/api';
 
@@ -12,6 +13,9 @@ const SignIn = () => {
         identifier: "",
         password: "",
     });
+    const [error, setError] = useState("")
+
+    const route = useRouter();
 
     const handleChange = (e) => {
         setUserData({...userData, [e.target.name]: e.target.value});
@@ -22,7 +26,10 @@ const SignIn = () => {
         try {
             const response = await loginUser(userData);
             console.log("Login sucessful:", response)
+
+            route.push("/")
         } catch(error) {
+            setError(error.message);
             console.log("Login failed:", error)
         }
     }
@@ -43,20 +50,12 @@ const SignIn = () => {
             {/* imputs */}
 
             <div className="space-y-4 flex flex-col gap-[10px]">
-                {/* <input 
-                    type="text" 
-                    name="username"
-                    className='border-[1px] py-1 px-2 rounded-md' 
-                //   onChange={handleChange} 
-                    placeholder="Username" 
-                    required 
-                /> */}
                 <input 
-                    type="email" 
+                    type="identifier" 
                     name="email"
                     className='border-[1px] py-1 px-2 rounded-md' 
                     onChange={handleChange} 
-                    placeholder="Email" 
+                    placeholder="Email or Username" 
                     required 
                 />
                 <input 
@@ -69,10 +68,12 @@ const SignIn = () => {
                 />
             </div>
             {/* button */}
+            <Link href="/" className="">                
+                <Button type="submit">Se connecter</Button>              
+            </Link>
+            {/* erreur s'il y a */}
             <div className="">
-                <Link href="/">
-                    <Button type="submit">Se connecter</Button>
-                </Link>
+                {error && <p className="text-red-500">{error}</p> }
             </div>
 
             <div className="mt-4 text-center text-[16px]">
