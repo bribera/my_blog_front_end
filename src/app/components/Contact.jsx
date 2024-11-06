@@ -2,7 +2,6 @@
 import React, {useState} from 'react'
 import Image from 'next/image'
 import Button from './Button'
-import { useFormik } from 'formik';
 import ValidationForm from './ValidationForm'
 
 
@@ -42,7 +41,6 @@ const Contact = () => {
   
 
   const handleSubmit = async (e) => {
-    
     e.preventDefault();
 
     const validationErrors = ValidationForm(formData);
@@ -73,7 +71,7 @@ const Contact = () => {
    
       setTimeout(() => {
         setSubmitted(false);
-      }, 3000);
+      }, 5000);
         
       }  catch (error) {
         console.error('Error:', error);
@@ -87,8 +85,6 @@ const Contact = () => {
    
   };
 
-  console.log(4);
-    console.log(formData);
 
   return (
     <div className=" pt-[160px] pb-[60px]  gap-[20px] px-[60px] ">
@@ -151,7 +147,8 @@ const Contact = () => {
               ></textarea>
               {errors.message && <p className="text-red-400">{errors.message}</p>}
 
-              <Button type="submit" onClick={() => console.log('clicked')}  disabled={status.isSubmitting}>
+              <Button type="submit" onClick={() => console.log('clicked')}  disabled={status.isSubmitting} className="bg-white">
+                
                 {status.isSubmitting ? 'Envoi en cours...' : 'Envoyer'}
 
               </Button>

@@ -4,6 +4,9 @@ import useFetch from '@/hooks/useFetch';
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 import Header from "@/app/components/Header"
 import Link from 'next/link';
+import Button from "./components/Button";
+import Footer from "@/app/components/Footer";
+import Navbar from "@/app/components/Navbar";
 
 
 export const getStrapiMedia = (url) => {
@@ -36,7 +39,7 @@ export default  function Home() {
             <p className="text-[40px] font-semibold">Quelques articles</p>
           </div>
             {/* les produits */}
-          <div className="grid grid-cols-4 w-full gap-[20px]">
+          <div className="grid grid-cols-2 lg:grid-cols-4 w-full gap-[20px]">
           {
            data && data.map((produit, id) => (
 
@@ -61,7 +64,12 @@ export default  function Home() {
                         },
                       }}
                     />
-                    <p className="font-medium text-[25px]">{produit.Price} $</p>
+                    <div className="flex justify-between">
+                      <p className="font-medium text-[25px]">{produit.Price} $</p>
+                      <Link href={`/produit/${produit.slug}`} className="">                      
+                        <Button className="savoir">En savoir plus</Button>
+                      </Link>
+                    </div>
                   </div>
                 </div>
               </div>

@@ -21,11 +21,7 @@ const FilterSearch = () => {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // useEffect(() => {
-    
-  //   fetchCategories().then(data => setCategories(data));
 
-  // }, []);
 
   useEffect(() => {
     const loadCategories = async () => {
@@ -41,11 +37,6 @@ const FilterSearch = () => {
     loadCategories();
   }, []);
 
-  // useEffect(() => {
-    
-  //   fetchArticles(selectedCategory, searchTerm).then(data => setArticles(data));
-    
-  // }, [selectedCategory, searchTerm]);
 
   useEffect(() => {
     const loadArticles = async () => {

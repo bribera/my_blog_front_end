@@ -1,7 +1,5 @@
-import Navbar from "@/app/components/Navbar";
+import ClientLayout from "./components/ClientLayout";
 import "./globals.css";
-import Footer from "@/app/components/Footer";
-
 
 
 export const metadata = {
@@ -17,12 +15,11 @@ export default function RootLayout({ children}) {
       <body
         className="relative"
       >
-        <Navbar />
+           <ClientLayout>
 
-        {children}
+           {children}
 
-        <Footer />
-
+           </ClientLayout>
       </body>
     </html>
   );

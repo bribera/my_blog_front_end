@@ -3,7 +3,7 @@ import React from 'react'
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 import useFetch from '@/hooks/useFetch';
 import Image from "next/image";
-import Typography from "@tailwindcss/typography"
+import { format, parseISO } from 'date-fns';
 
 export const getStrapiMedia = (url) => {
   
@@ -75,8 +75,6 @@ const ArticleDetail = ({params}) => {
   
   if (!articles || articles.length === 0) return <p>No articles found.</p>;
   
-  console.log(articles);
-  console.log('4') ;
 
   const article = articles[0];
 
@@ -93,8 +91,13 @@ const ArticleDetail = ({params}) => {
             </p>
           </div>
         </div>
-        <div className=""></div>
-        <div className=""></div>
+        <div className="pb-[20px]">
+
+          <p className="italic text-[14px]">Edité par: {article.auteur.nom}</p>
+
+          <p className="italic text-[14px]">{format(parseISO(article.date), 'MMMM dd, yyyy')}</p>
+          
+        </div>
 
         {article.attributes?.video?.data && (
           <VideoPlayer 
@@ -113,13 +116,6 @@ const ArticleDetail = ({params}) => {
         <BlocksRenderer
           content={article.description || []}
           blocks={{
-            // heading3: ({ children }) => {
-              
-            //     <h3 className="font-clarity font-[800] pb-[24px] md:pb-[30px] lg:pb-[32px] pt-[32px] md:pt-[40px] lg:pt-[40px] text-[44px] md:text-[38px] lg:text-[50px] leading-[34.38px] md:leading-[56.06px] lg:leading-[74.75px]">
-            //       {children}
-            //     </h3>
-              
-            // },
             bold: ({ children }) => 
               <strong className="font-bold">
                 {children}
@@ -131,9 +127,9 @@ const ArticleDetail = ({params}) => {
                 <Image
                   src={getStrapiMedia(image.url)}
                   alt={image.alternativeText || article.title}
-                  width={image.width || 800}
-                  height={image.height || 800}
-                  className="rounded-lg shadow-md"
+                  width={image.width || 100}
+                  height={image.height || 100}
+                  className="rounded-lg shadow-md w-[600px] h-[500px]"
                 />
               </div>
               );

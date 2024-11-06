@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Button = ({children, type = "button", onClick, disabled = false}) => {
+const Button = ({children, type = "button", onClick, disabled = false, className=""}) => {
   return (
     <div>
       <div className="">
@@ -8,7 +8,7 @@ const Button = ({children, type = "button", onClick, disabled = false}) => {
           type={type}
           disabled={disabled}
           onClick={onClick}
-          className="bg-white px-3 py-2 text-[18px] font-medium rounded-md">
+          className=" bg-gray-700 text-white px-3 py-2 text-[18px] font-medium rounded-md">
             {children}
         </button>
       </div>
