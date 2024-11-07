@@ -21,13 +21,16 @@ const FilterSearch = () => {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const [page, setPage] = useState(1)
+  const [pageSize, setPageSize] = useState(5)
+  const [totalPages, setTotalPages] = useState(2)
 
 
   useEffect(() => {
     const loadCategories = async () => {
       try {
         const categoriesData = await fetchCategories();
-        console.log('Fetched categories:', categoriesData); // Debug log
+        console.log('Fetched categories:', categoriesData); 
         setCategories(categoriesData);
       } catch (error) {
         console.error('Error fetching categories:', error);
@@ -42,9 +45,10 @@ const FilterSearch = () => {
     const loadArticles = async () => {
       setLoading(true);
       try {
-        const articlesData = await fetchArticles(selectedCategory, searchTerm);
-        console.log('Fetched articles:', articlesData); // Debug log
+        const articlesData = await fetchArticles(selectedCategory, searchTerm, page, pageSize);
+        console.log('Fetched articles:', articlesData); 
         setArticles(articlesData);
+        setTotalPages(articles.meta.pagination.pageCount);
       } catch (error) {
         console.error('Error fetching articles:', error);
       }
@@ -52,7 +56,11 @@ const FilterSearch = () => {
     };
 
     loadArticles();
-  }, [selectedCategory, searchTerm]);
+  }, [selectedCategory, searchTerm, page, pageSize]);
+
+  const handlePageChange = (newPage) => {
+    setPage(newPage);
+  };
 
 
   return (
@@ -116,6 +124,12 @@ const FilterSearch = () => {
 
             ))}
           </div>
+            {/* pagination */}
+            <div className="flex justify-between items-center mt-4">
+              <button className='bg-white px-2 py-1 rounded-sm disabled:bg-slate-500' onClick={() => handlePageChange(page - 1)} disabled={page === 1}>Previous</button>
+              <span>Page <span className="bg-gray-300 px-2 py-1 rounded-sm">{page}</span> of <span className="bg-gray-400 px-2 py-1 rounded-sm">{totalPages}</span></span>
+              <button className='bg-white px-2 py-1 rounded-sm disabled:bg-slate-500' onClick={() => handlePageChange(page + 1)} disabled={page === totalPages}>Next</button>
+            </div>
         </div>
       </div>
     </div>

@@ -9,23 +9,23 @@ const useFetch = (url) => {
     const [loading, setLoading] = useState(false)
    
 
-    useEffect(() => {
+    useEffect((url, page, pageSize = 5) => {
         const fetchData = async () => {
             setLoading(true);
 
             try {
 
-                const res = await fetch(url, {
-                        headers: {
-                          Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_TOKEN}`,  
-                        },
-                      }
+              const res = await fetch(`${url}&pagination[page]=${page}&pagination[pageSize]=${pageSize}`, {
+                headers: {
+                  Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_TOKEN}`,  
+                },
+              }
             );
-                const json = await res.json();
+            const json = await res.json();
 
                 
-                setData(json.data);
-                setLoading(false);
+            setData(json.data);
+            setLoading(false);
 
 
             
@@ -37,11 +37,10 @@ const useFetch = (url) => {
 
         fetchData()
         
-    },[url])
+    },[url, page, pageSize])
 
 
-  return {loading, data, error};
-  console.log(data);
+  return {loading, data, error}
 
 }
 
