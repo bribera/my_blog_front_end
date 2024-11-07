@@ -15,6 +15,8 @@ const SignIn = () => {
     });
     const [error, setError] = useState("")
 
+    
+
     const route = useRouter();
 
     const handleChange = (e) => {
@@ -25,14 +27,13 @@ const SignIn = () => {
         e.preventDefault();
         try {
             const response = await loginUser(userData);
-            console.log("Login sucessful:", response)
 
             route.push("/")
         } catch(error) {
             setError(error.message);
-            console.log("Login failed:", error)
         }
     }
+
 
   return (
     <div className='w-full min-h-screen flex justify-center items-center'>
@@ -51,8 +52,8 @@ const SignIn = () => {
 
             <div className="space-y-4 flex flex-col gap-[10px]">
                 <input 
-                    type="identifier" 
-                    name="email"
+                    type="text" 
+                    name="identifier"
                     className='border-[1px] py-1 px-2 rounded-md' 
                     onChange={handleChange} 
                     placeholder="Email or Username" 
@@ -67,10 +68,11 @@ const SignIn = () => {
                     required 
                 />
             </div>
+
             {/* button */}
-            <Link href="/" className="">                
+            {/* <Link href="" className="">                 */}
                 <Button type="submit">Se connecter</Button>              
-            </Link>
+            {/* </Link> */}
             {/* erreur s'il y a */}
             <div className="">
                 {error && <p className="text-red-500">{error}</p> }

@@ -56,7 +56,7 @@ export const registerUser = async (userData) => {
 
 export const loginUser = async (userData) => {
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_DOMAIN_URL}/auth/local`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_BASE_URL}/auth/local`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -64,16 +64,21 @@ export const loginUser = async (userData) => {
       body: JSON.stringify(userData),
     });
 
+    
+
     if (!response.ok) {
       throw new Error('Login failed');
     }
 
     const data = await response.json();
+   
     return data;
+
   
   } catch (error) {
     throw error;
   }
+
 };
 
   
