@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import { fetchCategories, fetchArticles } from '@/lib/api';
 
 
+
 export const getStrapiMedia = (url) => {
   const baseUrl = process.env.NEXT_PUBLIC_STRAPI_DOMAIN_URL;
   return `${baseUrl}${url}`; 
@@ -21,8 +22,8 @@ const FilterSearch = () => {
   const [loading, setLoading] = useState(true);
 
   const [page, setPage] = useState(1)
-  const [pageSize, setPageSize] = useState(5)
-  const [totalPages, setTotalPages] = useState(2)
+  const [pageSize, setPageSize] = useState(4)
+  const [totalPages, setTotalPages] = useState(3)
 
 
   useEffect(() => {
@@ -127,6 +128,8 @@ const FilterSearch = () => {
               <span>Page <span className="bg-gray-300 px-2 py-1 rounded-sm">{page}</span> of <span className="bg-gray-400 px-2 py-1 rounded-sm">{totalPages}</span></span>
               <button className='bg-white px-2 py-1 rounded-sm disabled:bg-slate-500' onClick={() => handlePageChange(page + 1)} disabled={page === totalPages}>Next</button>
             </div>
+
+       
         </div>
       </div>
     </div>

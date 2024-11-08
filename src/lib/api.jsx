@@ -9,7 +9,7 @@ export async function fetchCategories() {
   
 }
   
-export async function fetchArticles(categorie, search, page=1, pageSize=5) {
+export async function fetchArticles(categorie, search, page, pageSize) {
   let url = `${process.env.NEXT_PUBLIC_STRAPI_BASE_URL}/articles?populate=*`;
 
 
@@ -26,8 +26,6 @@ url += `&pagination[page]=${page}&pagination[pageSize]=${pageSize}`;
   
   const res = await fetch(url);
   const data = await res.json();
-
-  console.log(data)
   
   return data.data; 
 }

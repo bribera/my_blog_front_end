@@ -1,7 +1,7 @@
 "use client"
 import React, {useEffect, useState}  from 'react'
 
-const useFetch = (url) => {
+const useFetch = (url, page, pageSize = 5) => {
 
     
     const [data, setData] = useState(null)
@@ -9,7 +9,7 @@ const useFetch = (url) => {
     const [loading, setLoading] = useState(false)
    
 
-    useEffect((url, page, pageSize = 5) => {
+    useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
 

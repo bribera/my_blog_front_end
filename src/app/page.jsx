@@ -5,8 +5,6 @@ import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 import Header from "@/app/components/Header"
 import Link from 'next/link';
 import Button from "./components/Button";
-import Footer from "@/app/components/Footer";
-import Navbar from "@/app/components/Navbar";
 
 
 export const getStrapiMedia = (url) => {
