@@ -1,6 +1,10 @@
+
 import React from 'react'
 
-const Message = () => {
+
+const Profile = () => {
+    
+
   return (
     <div>
       
@@ -8,4 +12,4 @@ const Message = () => {
   )
 }
 
-export default Message
+export default Profile

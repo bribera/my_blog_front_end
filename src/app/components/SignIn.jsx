@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import Link from 'next/link'
 import Button from './Button'
 import { loginUser } from '@/lib/api';
-
+import { useAuth } from '@/context/AuthContext';
 
 
 const SignIn = () => {
@@ -12,6 +12,7 @@ const SignIn = () => {
         identifier: "",
         password: "",
     });
+    const {login} = useAuth();
 
     const handleChange = (e) => {
         setUserData({...userData, [e.target.name]: e.target.value});
@@ -21,9 +22,9 @@ const SignIn = () => {
         e.preventDefault();
         try {
             const response = await loginUser(userData);
-            console.log("Login sucessful:", response)
+           login(response)
         } catch(error) {
-            console.log("Login failed:", error)
+            error
         }
     }
 
@@ -43,14 +44,7 @@ const SignIn = () => {
             {/* imputs */}
 
             <div className="space-y-4 flex flex-col gap-[10px]">
-                {/* <input 
-                    type="text" 
-                    name="username"
-                    className='border-[1px] py-1 px-2 rounded-md' 
-                //   onChange={handleChange} 
-                    placeholder="Username" 
-                    required 
-                /> */}
+               
                 <input 
                     type="email" 
                     name="email"
@@ -70,9 +64,9 @@ const SignIn = () => {
             </div>
             {/* button */}
             <div className="">
-                <Link href="/">
-                    <Button type="submit">Se connecter</Button>
-                </Link>
+                
+                <Button type="submit">Se connecter</Button>
+               
             </div>
 
             <div className="mt-4 text-center text-[16px]">

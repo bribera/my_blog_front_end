@@ -56,7 +56,7 @@ export const registerUser = async (userData) => {
 
 export const loginUser = async (userData) => {
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_BASE_URL}/users`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_BASE_URL}/auth/local`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -74,6 +74,15 @@ export const loginUser = async (userData) => {
   } catch (error) {
     throw error;
   }
+};
+
+export const getUser = async (token) => {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_BASE_URL}/users/me`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data;
 };
 
   

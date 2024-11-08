@@ -1,3 +1,4 @@
+import AuthLayout from "./components/AuthLayout";
 import ClientLayout from "./components/ClientLayout";
 import "./globals.css";
 
@@ -14,12 +15,15 @@ export default function RootLayout({ children}) {
     <html lang="en">
       <body
         className="relative"
-      >
-           <ClientLayout>
+      >  
+        <AuthLayout>
+          
+          <ClientLayout>
 
-           {children}
+          {children}
 
-           </ClientLayout>
+          </ClientLayout>
+        </AuthLayout> 
       </body>
     </html>
   );
