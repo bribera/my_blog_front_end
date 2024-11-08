@@ -1,8 +1,10 @@
 "use client"
 import React, { useState } from "react"
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Button from "./Button";
 import { registerUser } from '../../lib/api'
+import { useAuth } from "@/context/AuthContext";
 
 
 const SignUp = () => {
@@ -12,6 +14,10 @@ const SignUp = () => {
         email: "",
         password: "",
     });
+
+    const route = useRouter();
+
+    const { login } = useAuth();
 
     const handleChange = (e) => {
         setUserData ({...userData, [e.target.name]: e.target.value});
@@ -23,6 +29,8 @@ const SignUp = () => {
         try {
 
             const response = await registerUser(userData);
+            login(response);
+            route.push('/auth/signin')
             console.log("Registration sucessful:", response);
 
         } catch(error) {
