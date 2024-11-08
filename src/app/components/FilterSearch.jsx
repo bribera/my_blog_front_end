@@ -30,10 +30,9 @@ const FilterSearch = () => {
     const loadCategories = async () => {
       try {
         const categoriesData = await fetchCategories();
-        console.log('Fetched categories:', categoriesData); 
         setCategories(categoriesData);
       } catch (error) {
-        console.error('Error fetching categories:', error);
+        error
       }
     };
     
@@ -46,11 +45,10 @@ const FilterSearch = () => {
       setLoading(true);
       try {
         const articlesData = await fetchArticles(selectedCategory, searchTerm, page, pageSize);
-        console.log('Fetched articles:', articlesData); 
         setArticles(articlesData);
         setTotalPages(articles.meta.pagination.pageCount);
       } catch (error) {
-        console.error('Error fetching articles:', error);
+       error
       }
       setLoading(false);
     };
