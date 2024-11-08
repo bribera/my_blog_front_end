@@ -29,9 +29,7 @@ const SignIn = () => {
         try {
             const response = await loginUser(userData);
            login(response)
-        } catch(error) {
-            error
-
+           
             route.push("/")
         } catch(error) {
             setError(error.message);
