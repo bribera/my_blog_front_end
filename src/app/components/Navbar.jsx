@@ -2,8 +2,10 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 import Button from './Button'
+import { useAuth } from '@/context/AuthContext'
 
 const Navbar = () => {
+  const {user, logout} = useAuth
 
     const menu = [
       {
@@ -39,12 +41,23 @@ const Navbar = () => {
 
           </ul>
           <div className="flex gap-2 items-center">
-            <Link href="/auth/signup">            
-              <Button>S'enregister</Button>
-            </Link>
-            <Link href="/auth/signin">
-              <Button>Se connecter</Button>
-            </Link>
+            {user ? (
+                <div className="flex items-center">
+                  <span className="font-semibold text-[20px]">
+                    {user.username.charAt(0).toUpperCase()} - {user.email}
+                  </span>
+                  <Button onClick={logout}>Déconnexion</Button>
+                </div>
+              ) : (
+                <>
+                  <Link href="/auth/signup">
+                    <Button>S'enregister</Button>
+                  </Link>
+                  <Link href="/auth/signin">
+                    <Button>Se connecter</Button>
+                  </Link>
+                </>
+            )}
           </div>
         </div>
       </div>

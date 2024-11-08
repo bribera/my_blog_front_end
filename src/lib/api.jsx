@@ -83,4 +83,13 @@ export const loginUser = async (userData) => {
 
 };
 
+export const getUser = async (token) => {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_BASE_URL}/users/me`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data;
+};
+
   

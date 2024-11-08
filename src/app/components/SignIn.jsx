@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import Button from './Button'
 import { loginUser } from '@/lib/api';
-
+import { useAuth } from '@/context/AuthContext';
 
 
 const SignIn = () => {
@@ -13,6 +13,7 @@ const SignIn = () => {
         identifier: "",
         password: "",
     });
+    const {login} = useAuth();
     const [error, setError] = useState("")
 
     
@@ -27,10 +28,14 @@ const SignIn = () => {
         e.preventDefault();
         try {
             const response = await loginUser(userData);
+           login(response)
+        } catch(error) {
+            error
 
             route.push("/")
         } catch(error) {
             setError(error.message);
+
         }
     }
 
@@ -51,6 +56,7 @@ const SignIn = () => {
             {/* imputs */}
 
             <div className="space-y-4 flex flex-col gap-[10px]">
+
                 <input 
                     type="text" 
                     name="identifier"
@@ -75,7 +81,13 @@ const SignIn = () => {
             {/* </Link> */}
             {/* erreur s'il y a */}
             <div className="">
+
+                
+                <Button type="submit">Se connecter</Button>
+               
+
                 {error && <p className="text-red-500">{error}</p> }
+
             </div>
 
             <div className="mt-4 text-center text-[16px]">
