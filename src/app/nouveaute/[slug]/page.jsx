@@ -4,6 +4,8 @@ import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 import useFetch from '@/hooks/useFetch';
 import Image from "next/image";
 import { format, parseISO } from 'date-fns';
+import { useState } from 'react';
+import Button from '@/app/components/Button';
 
 export const getStrapiMedia = (url) => {
   
@@ -67,7 +69,72 @@ const ArticleDetail = ({params}) => {
   const { slug } = params;
   const { data: articles, error, loading } = useFetch(`${process.env.NEXT_PUBLIC_STRAPI_BASE_URL}/articles?populate=*&filters[slug][$eq]=${slug}`);
 
+  const [comment, setComment] = useState({ author: '', text: '' });
+  const [comments, setComments] = useState([]);
 
+  const [status, setStatus] = useState({
+    isSubmitting: false,
+    isSuccess: false,
+    error: null
+  });
+
+  const [errors, setErrors] = useState({});
+  const [submitted, setSubmitted] = useState(false);
+
+
+  const handleCommentChange = (e) => {
+    const { name, value } = e.target;
+    setComment(prevComment => ({
+      ...prevComment,
+      [name]: value
+    }));
+
+    if (errors[name]) {
+      setErrors(prevState => ({
+        ...prevState,
+        [name]: ''
+      }));
+    }
+  };
+
+  const handleCommentSubmit = async (e) => {
+    e.preventDefault();
+
+    setStatus({ isSubmitting: true, isSuccess: false, error: null });
+
+    try{
+
+      const response = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_BASE_URL}/comments`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          data: {
+            author: comment.author,
+            text: comment.text,
+            article: article.id
+          }
+        })        
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to submit message');
+      }
+
+      const newComment = await response.json();
+      setComments(prevComments => [...prevComments, newComment.data]);
+      setComment({ author: '', text: '' });
+
+    } catch(error){
+      console.error('Error:', error);
+      setErrors({ submit: 'Failed to send message' });
+    } finally {
+      setStatus({ isSubmitting: false, isSuccess: true, error: null });
+    }
+
+    
+  };
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
@@ -78,6 +145,8 @@ const ArticleDetail = ({params}) => {
 
   const article = articles[0];
 
+  console.log(3);
+console.log(article);
 
   return (
     <div className="pt-[160px] pb-[60px] px-[60px] animate-plus">
@@ -144,6 +213,33 @@ const ArticleDetail = ({params}) => {
            
           }}
         />
+
+        <div className="flex gap-2 text-[22px]">
+          <p className='font-semibold'>Tags:</p>
+          {
+            article.tags.map(tag => tag.type).join(', ')
+          }
+        </div>
+
+
+        <div className="py-[20px]">
+          <p className="text-[40px] font-semibold">Commentaires</p>
+        </div>
+
+        <form onSubmit={handleCommentSubmit} className='bg-white/45 px-2 py-3 flex flex-col gap-[20px]'>
+          <div className='flex flex-col gap-2'>
+            <label className='text-[18px] font-semibold'>Nom</label>
+            <input type="text" name="author" value={comment.author} onChange={handleCommentChange} required />
+          </div>
+          <div className='flex flex-col gap-2'>
+            <label className='text-[18px] font-semibold'>Comment:</label>
+            <textarea name="text" value={comment.text} className='' onChange={handleCommentChange} required />
+          </div>
+          <Button type="submit">Envoyez</Button>
+        </form>
+
+        {submitted && <p className='text-green-500 font-medium italic'>Votre message a été envoyé avec succès !</p>}
+
       </div>
     </div>
   )

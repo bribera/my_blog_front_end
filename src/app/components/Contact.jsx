@@ -67,11 +67,11 @@ const Contact = () => {
         }
 
         setSubmitted(true);
-      setFormData({ name: '', email: '', subject: '', message: '' });
-   
-      setTimeout(() => {
-        setSubmitted(false);
-      }, 5000);
+        setFormData({ name: '', email: '', subject: '', message: '' });
+    
+        setTimeout(() => {
+          setSubmitted(false);
+        }, 5000);
         
       }  catch (error) {
         console.error('Error:', error);

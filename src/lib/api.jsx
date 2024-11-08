@@ -9,7 +9,7 @@ export async function fetchCategories() {
   
 }
   
-export async function fetchArticles(categorie, search) {
+export async function fetchArticles(categorie, search, page=1, pageSize=5) {
   let url = `${process.env.NEXT_PUBLIC_STRAPI_BASE_URL}/articles?populate=*`;
 
 
@@ -21,6 +21,8 @@ if (categorie) {
 if (search) {
   url += `&filters[title][$containsi]=${search}`;
 }
+
+url += `&pagination[page]=${page}&pagination[pageSize]=${pageSize}`;
   
   const res = await fetch(url);
   const data = await res.json();
@@ -64,16 +66,21 @@ export const loginUser = async (userData) => {
       body: JSON.stringify(userData),
     });
 
+    
+
     if (!response.ok) {
       throw new Error('Login failed');
     }
 
     const data = await response.json();
+   
     return data;
+
   
   } catch (error) {
     throw error;
   }
+
 };
 
 export const getUser = async (token) => {
