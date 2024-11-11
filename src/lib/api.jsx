@@ -2,27 +2,34 @@
 
 export async function fetchCategories() {
 
+  try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_BASE_URL}/categories?populate=*`);
-    
+
+    if (!res.ok) {
+      throw new Error(`HTTP error! status: ${res.status}`);
+    }
+
     const data = await res.json();
-    return data.data; 
+
+    return data.data;
+  } catch (error) {
+      error
+    throw error;
+  }
   
 }
   
-export async function fetchArticles(categorie, search, page=1, pageSize=5) {
+export async function fetchArticles({categorie, searchTerm}) {
   let url = `${process.env.NEXT_PUBLIC_STRAPI_BASE_URL}/articles?populate=*`;
-
-
   
 if (categorie) {
   url += `&filters[categorie][id][$eq]=${categorie}`;
 }
 
-if (search) {
-  url += `&filters[title][$containsi]=${search}`;
+if (searchTerm) {
+  url += `&filters[title][$containsi]=${searchTerm}`;
 }
 
-url += `&pagination[page]=${page}&pagination[pageSize]=${pageSize}`;
   
   const res = await fetch(url);
   const data = await res.json();
