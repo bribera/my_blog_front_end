@@ -9,7 +9,7 @@ export async function fetchCategories() {
   
 }
   
-export async function fetchArticles(categorie, search) {
+export async function fetchArticles(categorie, search, page=1, pageSize=5) {
   let url = `${process.env.NEXT_PUBLIC_STRAPI_BASE_URL}/articles?populate=*`;
 
 
@@ -21,6 +21,8 @@ if (categorie) {
 if (search) {
   url += `&filters[title][$containsi]=${search}`;
 }
+
+url += `&pagination[page]=${page}&pagination[pageSize]=${pageSize}`;
   
   const res = await fetch(url);
   const data = await res.json();
@@ -67,48 +69,26 @@ export const loginUser = async (identifier, password) => {
       }),
     });
 
+
     const data = await response.json();
 
     const token = data.jwt;
     const user = data.user;
+
 
     if (!response.ok) {
       throw new Error('Login failed');
     }
 
     return data;
+
   
   } catch (error) {
     console.error('Error logging in:', error);
     throw error;
   }
+
 };
 
-// export const getUser = async (token) => {
-//   // const authToken = await getAuthtoken();
-//   try {
-//     const response = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_BASE_URL}/users/me`, {
-//       method: "POST",
-//       headers: {
-//         "Content-Type": "application/json",
-//         Authorization: `Bearer ${token}`,
-//       },
-//       // body:JSON.stringtify({
-//       //   ...identifier= identifier,
-//       //   ...password = password,
-//       // }),
-//     });
-//     const data = await response.json();
-//     console.log("12");
-//     console.log(data);
-//     return data;
-
-//   } catch (error) {
-//     console.log("error", error)
-//     throw error
-    
-//   }
-  
-// };
 
   

@@ -1,6 +1,7 @@
 "use client"
 import React, { useState } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import Button from './Button'
 import { loginUser } from '@/lib/api';
 import { useRouter } from 'next/navigation';
@@ -10,8 +11,11 @@ import { useAuth } from '@/context/AuthContext';
 
 const SignIn = () => {
 
-    const [identifier, setIdentifier] = useState('');
-    const [password, setPassword] = useState(''); 
+    const [userData, setUserData] = useState({
+        identifier: "",
+        password: "",
+    });
+    const [error, setError] = useState("")
 
     const route = useRouter();
     const {login} = useAuth()
@@ -22,14 +26,12 @@ const SignIn = () => {
             const user = await loginUser(identifier, password);
             login(user);
 
-            console.log("6")
-            console.log(user)
-
             route.push("/")
         } catch(error) {
-           console.log("error in logging:",error) 
+            error
         }
     }
+
 
   return (
     <div className='w-full min-h-screen flex justify-center items-center'>
@@ -47,7 +49,7 @@ const SignIn = () => {
             {/* imputs */}
 
             <div className="space-y-4 flex flex-col gap-[10px]">
-               
+
                 <input 
                     type="email" 
                     className='border-[1px] py-1 px-2 rounded-md' 
@@ -65,11 +67,9 @@ const SignIn = () => {
                     required 
                 />
             </div>
-            {/* button */}
             <div className="">
-                
                 <Button type="submit">Se connecter</Button>
-               
+                {error && <p className="text-red-500">{error}</p> }
             </div>
 
             <div className="mt-4 text-center text-[16px]">
