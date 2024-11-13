@@ -1,38 +1,21 @@
 "use client"
-import { getUser } from '@/lib/api'
-import { createContext, useContext, useState, useEffect } from 'react'
+import { createContext, useContext, useState,} from 'react'
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({children}) => {
 
-    const [user, setUser] = useState("")
+    const [user, setUser] = useState(null)
 
-    useEffect(() =>{
-        const fetchUser = async () => {
-            const token = localStorage.getItem("token");
-            if(token) {
-                try{
-                    const userData = await getUser(token);
-                    setUser(userData)
-                    
-                } catch(error) {
-                    error
-                }
-            }
-        }
-
-        fetchUser();
-    }, []);
 
     const login = (userData) => {
         setUser(userData);
-        localStorage.setItem('token', userData.jwt);
+        console.log('User logged in:', userData);      
     };
 
     const logout = () => {
         setUser(null);
-        localStorage.removeItem('token');
+        console.log('User logged out');
     };    
 
 

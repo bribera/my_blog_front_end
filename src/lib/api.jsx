@@ -54,35 +54,61 @@ export const registerUser = async (userData) => {
   }
 };
 
-export const loginUser = async (userData) => {
+export const loginUser = async (identifier, password) => {
   try {
     const response = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_BASE_URL}/auth/local`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(userData),
+      body: JSON.stringify({
+        identifier: identifier, 
+        password: password
+      }),
     });
+
+    const data = await response.json();
+
+    const token = data.jwt;
+    const user = data.user;
 
     if (!response.ok) {
       throw new Error('Login failed');
     }
 
-    const data = await response.json();
     return data;
   
   } catch (error) {
+    console.error('Error logging in:', error);
     throw error;
   }
 };
 
-export const getUser = async (token) => {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_BASE_URL}/users/me`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-  return response.data;
-};
+// export const getUser = async (token) => {
+//   // const authToken = await getAuthtoken();
+//   try {
+//     const response = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_BASE_URL}/users/me`, {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json",
+//         Authorization: `Bearer ${token}`,
+//       },
+//       // body:JSON.stringtify({
+//       //   ...identifier= identifier,
+//       //   ...password = password,
+//       // }),
+//     });
+//     const data = await response.json();
+//     console.log("12");
+//     console.log(data);
+//     return data;
+
+//   } catch (error) {
+//     console.log("error", error)
+//     throw error
+    
+//   }
+  
+// };
 
   

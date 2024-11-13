@@ -3,28 +3,31 @@ import React, { useState } from 'react'
 import Link from 'next/link'
 import Button from './Button'
 import { loginUser } from '@/lib/api';
+import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
+
 
 
 const SignIn = () => {
 
-    const [userData, setUserData] = useState({
-        identifier: "",
-        password: "",
-    });
-    const {login} = useAuth();
+    const [identifier, setIdentifier] = useState('');
+    const [password, setPassword] = useState(''); 
 
-    const handleChange = (e) => {
-        setUserData({...userData, [e.target.name]: e.target.value});
-    }
+    const route = useRouter();
+    const {login} = useAuth()
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await loginUser(userData);
-           login(response)
+            const user = await loginUser(identifier, password);
+            login(user);
+
+            console.log("6")
+            console.log(user)
+
+            route.push("/")
         } catch(error) {
-            error
+           console.log("error in logging:",error) 
         }
     }
 
@@ -47,17 +50,17 @@ const SignIn = () => {
                
                 <input 
                     type="email" 
-                    name="email"
                     className='border-[1px] py-1 px-2 rounded-md' 
-                    onChange={handleChange} 
-                    placeholder="Email" 
+                    onChange={(e) => setIdentifier(e.target.value)} 
+                    placeholder="Email"
+                    value={identifier} 
                     required 
                 />
                 <input 
-                    type="password" 
-                    name="password" 
+                    type="password"  
                     className='border-[1px] py-1 px-2 rounded-md'
-                    onChange={handleChange} 
+                    onChange={(e) => setPassword(e.target.value)} 
+                    value={password}
                     placeholder="Password" 
                     required 
                 />

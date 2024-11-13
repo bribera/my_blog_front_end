@@ -41,7 +41,6 @@ const useFetch = (url) => {
 
 
   return {loading, data, error};
-  console.log(data);
 
 }
 
