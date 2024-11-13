@@ -9,13 +9,11 @@ export const AuthProvider = ({children}) => {
 
 
     const login = (userData) => {
-        setUser(userData);
-        console.log('User logged in:', userData);      
+        setUser(userData);    
     };
 
     const logout = () => {
         setUser(null);
-        console.log('User logged out');
     };    
 
 

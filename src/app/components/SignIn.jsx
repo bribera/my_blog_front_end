@@ -4,17 +4,14 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import Button from './Button'
 import { loginUser } from '@/lib/api';
-import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 
 
 
 const SignIn = () => {
 
-    const [userData, setUserData] = useState({
-        identifier: "",
-        password: "",
-    });
+    const [identifier, setIdentifier] = useState('');
+    const [password, setPassword] = useState('');
     const [error, setError] = useState("")
 
     const route = useRouter();

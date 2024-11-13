@@ -72,9 +72,6 @@ export const loginUser = async (identifier, password) => {
 
     const data = await response.json();
 
-    const token = data.jwt;
-    const user = data.user;
-
 
     if (!response.ok) {
       throw new Error('Login failed');
